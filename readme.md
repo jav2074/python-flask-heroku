@@ -53,6 +53,7 @@ python ../../src/index.py
 
 <!-- HEROKU -->
 requirements.txt
+    <!-- copiado de https://github.com/FaztWeb/python-flask-first-website/blob/master/requirements.txt -->
     pip freeze > ../../src/requirements.txt
 runtime.txt
     <!-- https://devcenter.heroku.com/articles/python-runtimes -->
