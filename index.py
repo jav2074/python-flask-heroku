@@ -6,8 +6,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import sqlite3
 
 # connection dir property
-# db_name = 'database.db'
-db_name = 'src/database.db'
+db_name = 'database.db'
+# db_name = 'src/database.db'       # LOCAL
 
 # Function to Execute Database Querys
 def run_query(query, parameters = ()):
