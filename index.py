@@ -6,7 +6,8 @@ from flask import Flask, render_template
 import sqlite3
 
 # connection dir property
-db_name = 'database.db'      # '../src/database.db'
+# db_name = 'database.db'
+db_name = 'src/database.db'
 
 # Function to Execute Database Querys
 def run_query(query, parameters = ()):
