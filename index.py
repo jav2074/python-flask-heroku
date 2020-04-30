@@ -11,7 +11,6 @@ db_name = 'h_database.db'             # HEROKU
 # Function to Execute Database Querys
 def run_query(query, parameters = ()):
     with sqlite3.connect(db_name) as conn:
-        print(f'db: {db_name}')
         cursor = conn.cursor()
         result = cursor.execute(query, parameters) 
         conn.commit()
