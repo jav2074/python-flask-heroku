@@ -45,6 +45,10 @@ def home():
     db_init(request.remote_addr)
     return render_template('home.html')
 
+@app.route("/get_my_ip", methods=["GET"])
+def get_my_ip():
+    return jsonify({'ip': request.remote_addr}), 200
+
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -60,9 +64,9 @@ def db_delete(id):
     flash(f"Se ha borrado correctamente el registro id: {id}")
     return redirect(url_for('db'))
 
-@app.route("/get_my_ip", methods=["GET"])
-def get_my_ip():
-    return jsonify({'ip': request.remote_addr}), 200
+@app.route('/edit/<string:id>')
+def db_edit(id):
+    return jsonify({'id': id}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)     # Modo debug 
