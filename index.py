@@ -8,16 +8,17 @@ import sqlite3
 # connection dir property
 db_name = 'h_database.db'             # HEROKU
 
-def db_init(host):    
+def db_init(host, db):    
     if(host == '127.0.0.1'):
-        db_name = 'src/l_database.db'     # LOCAL
+        db = 'src/l_database.db'     # LOCAL
     else:
-        db_name = 'h_database.db'         # HEROKU
-    print(f'host: {host} - db: {db_name}')
+        db = 'h_database.db'         # HEROKU
+    print(f'host: {host} - db: {db}')
 
 # Function to Execute Database Querys
 def run_query(query, parameters = ()):
     with sqlite3.connect(db_name) as conn:
+        print(f'db: {db_name}')
         cursor = conn.cursor()
         result = cursor.execute(query, parameters) 
         conn.commit()
@@ -42,7 +43,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'    # para flash
 
 @app.route('/')
 def home():
-    db_init(request.remote_addr)
+    db_init(request.remote_addr, db_name)
     return render_template('home.html')
 
 @app.route("/get_my_ip", methods=["GET"])
