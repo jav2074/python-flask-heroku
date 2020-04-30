@@ -13,18 +13,17 @@ db_name = 'src/database.db'
 def run_query(query, parameters = ()):
     with sqlite3.connect(db_name) as conn:
         cursor = conn.cursor()
-        result = cursor.execute(query, parameters)
+        cursor.execute(query, parameters)   # result = 
+        result = cursor.fetchall()          # convierte el resultset en un Array
         conn.commit()
     return result
 
 # Get Products from Database
 def get_products():
     # getting data
-    query = 'SELECT * FROM product ORDER BY name DESC'
+    query = 'SELECT * FROM product ORDER BY id ASC'
     db_rows = run_query(query)
-    # filling data
-    for row in db_rows:
-        print(row)
+    return db_rows
 
 # -------------------------------------------------------------------------------
 
@@ -41,9 +40,8 @@ def about():
 
 @app.route('/db')
 def db():
-    get_products()
-    return render_template('db.html')
+    data = get_products()
+    return render_template('db.html', data = data)
 
 if __name__ == '__main__':
-    # application = Product(app)
     app.run(debug=True)     # Modo debug 
