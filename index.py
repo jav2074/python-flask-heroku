@@ -11,7 +11,7 @@ def about():
     return render_template('about.html')
 
 @app.route('/db')
-def about():
+def db():
     return render_template('db.html')
 
 if __name__ == '__main__':
