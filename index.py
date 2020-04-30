@@ -6,13 +6,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 import sqlite3
 
 # connection dir property
-db_name = 'database.db'             # HEROKU
+db_name = 'h_database.db'             # HEROKU
 
 def db_init(host):    
     if(host == '127.0.0.1'):
-        db_name = 'src/database.db'     # LOCAL
+        db_name = 'src/l_database.db'     # LOCAL
     else:
-        db_name = 'database.db'         # HEROKU
+        db_name = 'h_database.db'         # HEROKU
     print(f'host: {host} - db: {db_name}')
 
 # Function to Execute Database Querys
