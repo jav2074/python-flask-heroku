@@ -20,8 +20,19 @@ def run_query(query, parameters = ()):
 def get_products():
     # getting data
     query = 'SELECT * FROM product ORDER BY id ASC'
-    db_rows = run_query(query)
-    return db_rows
+    result = run_query(query)
+    return result
+# Get One Product from Database
+def get_product(id):
+    query = 'SELECT * FROM product WHERE id = ?'
+    result = run_query(query, (id, ))    #  
+    return result
+# update_products(id)
+def update_products(id, name, price):
+    query = 'UPDATE product SET name = ?, price = ? WHERE id = ?'
+    parameters = (name, price, id)
+    result = run_query(query, parameters) 
+    return result
 # delete_products(id)
 def delete_products(id):
     query = 'DELETE FROM product WHERE id = ?'
@@ -50,15 +61,26 @@ def db():
     result = get_products()
     return render_template('db.html', data = result)
 
+@app.route('/edit/<string:id>')
+def db_edit(id):
+    result = get_product(id)
+    return render_template('edit.html', data = result)
+
+@app.route('/update/<string:id>', methods = ['POST'])
+def db_update(id):
+    if(request.method == 'POST'):
+        name = request.form['name']
+        price = request.form['price']
+    result = update_products(id, name, price)
+    flash(f"Se ha actualizado correctamente el registro id: {id} - name: {name} - price: {price}")
+    return redirect(url_for('db'))
+
 @app.route('/delete/<string:id>')
 def db_delete(id):
     result = delete_products(id)
     flash(f"Se ha borrado correctamente el registro id: {id}")
     return redirect(url_for('db'))
 
-@app.route('/edit/<string:id>')
-def db_edit(id):
-    return jsonify({'id': id}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)     # Modo debug 

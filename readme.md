@@ -5,6 +5,8 @@ Ademas terminaremos desplegando nuestra aplicación en un servicio de la nube ll
 
 CÓDIGO FINAL:
 https://github.com/FaztWeb/python-flask-first-website
+https://github.com/FaztWeb/flask-crud-contacts-app
+
 
 …or create a new repository on the command line
 echo "# python-flask-website-heroku" >> README.md
