@@ -9,7 +9,7 @@ import sqlite3
 db_name = 'database.db'             # HEROKU
 
 def db_init(host):    
-    if(str(host) == '127.0.0.1'):
+    if(host == '127.0.0.1'):
         db_name = 'src/database.db'     # LOCAL
     else:
         db_name = 'database.db'         # HEROKU
