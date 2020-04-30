@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 # -------------------------------------------------------------------------------
 # DB
@@ -26,7 +26,6 @@ def get_products():
     return db_rows
 # delete_products(id)
 def delete_products(id):
-    # query = f'DELETE FROM product WHERE id = {id}'
     query = 'DELETE FROM product WHERE id = ?'
     result = run_query(query, (id, ))    #  
     return result
@@ -34,6 +33,7 @@ def delete_products(id):
 
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'    # para flash
 
 @app.route('/')
 def home():
@@ -51,7 +51,8 @@ def db():
 @app.route('/delete/<string:id>')
 def db_delete(id):
     result = delete_products(id)
-    print(f"Se ha borrado correctamente el registro id:{id}")
+    flash(f"Se ha borrado correctamente el registro id: {id}")
+    # flash("Se ha borrado correctamente el registro id: ")
     return redirect(url_for('db'))
 
 if __name__ == '__main__':
