@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 
 # -------------------------------------------------------------------------------
 # DB
@@ -13,8 +13,8 @@ db_name = 'src/database.db'
 def run_query(query, parameters = ()):
     with sqlite3.connect(db_name) as conn:
         cursor = conn.cursor()
-        cursor.execute(query, parameters)   # result = 
-        result = cursor.fetchall()          # convierte el resultset en un Array
+        result = cursor.execute(query, parameters)   # result = 
+        # result = cursor.fetchall()          # convierte el resultset en un Array
         conn.commit()
     return result
 
@@ -24,7 +24,12 @@ def get_products():
     query = 'SELECT * FROM product ORDER BY id ASC'
     db_rows = run_query(query)
     return db_rows
-
+# delete_products(id)
+def delete_products(id):
+    # query = f'DELETE FROM product WHERE id = {id}'
+    query = 'DELETE FROM product WHERE id = ?'
+    result = run_query(query, (id, ))    #  
+    return result
 # -------------------------------------------------------------------------------
 
 
@@ -40,8 +45,14 @@ def about():
 
 @app.route('/db')
 def db():
-    data = get_products()
-    return render_template('db.html', data = data)
+    result = get_products()
+    return render_template('db.html', data = result)
+
+@app.route('/delete/<string:id>')
+def db_delete(id):
+    result = delete_products(id)
+    print(f"Se ha borrado correctamente el registro id:{id}")
+    return redirect(url_for('db'))
 
 if __name__ == '__main__':
     app.run(debug=True)     # Modo debug 
