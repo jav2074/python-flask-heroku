@@ -40,7 +40,7 @@ def insert_product(name, price):
     result = run_query(query, parameters) 
     return result
 # delete_products
-def delete_products(id):
+def delete_product(id):
     query = 'DELETE FROM product WHERE id = ?'
     result = run_query(query, (id, ))    #  
     return result
@@ -76,8 +76,8 @@ def db_update(id):
     if(request.method == 'POST'):
         name = request.form['name']
         price = request.form['price']
-    result = update_products(id, name, price)
-    flash(f"Se ha actualizado correctamente el registro id: {id} - name: {name} - price: {price}")
+        result = update_products(id, name, price)
+        flash(f"Se ha actualizado correctamente el registro id: {id} - name: {name} - price: {price}")
     return redirect(url_for('db'))
 
 @app.route('/new')
@@ -88,14 +88,19 @@ def db_insert():
     if(request.method == 'POST'):
         name = request.form['name']
         price = request.form['price']
-    result = insert_product(name, price)
-    flash(f"Se ha creardo correctamente el registro name: {name} - price: {price}")
+        result = insert_product(name, price)
+        flash(f"Se ha creardo correctamente el registro name: {name} - price: {price}")
     return redirect(url_for('db'))
 
-@app.route('/delete/<string:id>')
+@app.route('/del/<string:id>')
+def db_del(id):
+    result = get_product(id)
+    return render_template('delete.html', data = result)
+@app.route('/delete/<string:id>', methods = ['POST'])
 def db_delete(id):
-    result = delete_products(id)
-    flash(f"Se ha borrado correctamente el registro id: {id}")
+    if(request.method == 'POST'):
+        result = delete_product(id)
+        flash(f"Se ha borrado correctamente el registro id: {id}")
     return redirect(url_for('db'))
 
 
