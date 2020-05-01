@@ -3,7 +3,23 @@
 {% block body %}
 
 <div class="card card-body">
-    <h1 class="display-4">Hello, DB!</h1>
+
+    <div id="container-fluid">
+        <div class="row">
+            <div class="col-10">
+                <span class="float-left">
+                    <h1 class="display-4">Hello, DB!</h1>
+                </span>
+            </div>
+            <div class="col-2">
+                <span class="float-right">
+                    <a href="/new" class="btn btn-success" data-toggle="tooltip" data-placement="left" title="new">
+                        <i class='fa fa-plus-square' style='font-size:18px'></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
 
     {% with messages = get_flashed_messages()  %}
     {% if messages %}
@@ -30,13 +46,9 @@
             {% for row in data %}
             <tr>
                 <td>
-                    <a  href="/edit/{{row[0]}}" 
-                        class="btn btn-primary" 
-                        data-toggle="tooltip" 
-                        data-placement="left"
-                        title="edit"
-                        data-toggle="modal" data-target="#myModal">
-                        <i class='fas fa-edit' style='font-size:18px'></i>
+                    <a href="/edit/{{row[0]}}" class="btn btn-primary" data-toggle="tooltip" data-placement="left"
+                        title="edit">
+                        <i class='fas fa-edit' style='font-size:14px'></i>
                     </a>
                     <a href="/delete/{{row[0]}}" class="btn btn-danger" data-toggle="tooltip" data-placement="left"
                         title="delete">

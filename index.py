@@ -27,13 +27,19 @@ def get_product(id):
     query = 'SELECT * FROM product WHERE id = ?'
     result = run_query(query, (id, ))    #  
     return result
-# update_products(id)
+# update_products
 def update_products(id, name, price):
     query = 'UPDATE product SET name = ?, price = ? WHERE id = ?'
     parameters = (name, price, id)
     result = run_query(query, parameters) 
     return result
-# delete_products(id)
+# insert_product
+def insert_product(name, price):
+    query = 'INSERT INTO product VALUES(NULL, ?, ?)'
+    parameters = (name, price)
+    result = run_query(query, parameters) 
+    return result
+# delete_products
 def delete_products(id):
     query = 'DELETE FROM product WHERE id = ?'
     result = run_query(query, (id, ))    #  
@@ -64,8 +70,7 @@ def db():
 @app.route('/edit/<string:id>')
 def db_edit(id):
     result = get_product(id)
-    return render_template('edit.html', data = result)
-
+    return render_template('update.html', data = result)
 @app.route('/update/<string:id>', methods = ['POST'])
 def db_update(id):
     if(request.method == 'POST'):
@@ -73,6 +78,18 @@ def db_update(id):
         price = request.form['price']
     result = update_products(id, name, price)
     flash(f"Se ha actualizado correctamente el registro id: {id} - name: {name} - price: {price}")
+    return redirect(url_for('db'))
+
+@app.route('/new')
+def db_new():
+    return render_template('insert.html')
+@app.route('/insert', methods = ['POST'])
+def db_insert():
+    if(request.method == 'POST'):
+        name = request.form['name']
+        price = request.form['price']
+    result = insert_product(name, price)
+    flash(f"Se ha creardo correctamente el registro name: {name} - price: {price}")
     return redirect(url_for('db'))
 
 @app.route('/delete/<string:id>')

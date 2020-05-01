@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}    
+{% block body %}
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
@@ -17,9 +17,24 @@
                     <input type="text" name="price" placeholder="Price" value="{{row[2]}}" class="form-control">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">
-                        Update
-                    </button>
+                    <div id="container-fluid">
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="float-left">
+                                    <a href="/db" class="btn btn-secondary">
+                                        Cancel
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="col-6">
+                                <span class="float-right">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Update
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
