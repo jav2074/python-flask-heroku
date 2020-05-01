@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 
-{% block body %}
+{% block body %}    
 
 <div class="row">
     <div class="col-md-4 offset-md-4">
         {% for row in data %}
-        <div class="card card-body">
+        <div class="card card-body bg-dark">
             <form action="/update/{{row[0]}}" method="POST">
                 <div class="form-group">
                     <input type="text" name="id" placeholder="Id" value="{{row[0]}}" class="form-control" disabled=true>

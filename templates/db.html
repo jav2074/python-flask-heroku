@@ -16,31 +16,41 @@
     {% endif %}
     {% endwith %}
 
-    <table>
+    <!-- <table class="table table-striped table-hover table-bordered table-sm bg-white"> -->
+    <table class="table table-hover table-dark table-responsive">
         <thead>
             <tr>
-                <td>Id</td>
-                <td>Name</td>
-                <td>Price</td>
-                <td>Operations</td>
+                <th>Operations</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
             </tr>
         </thead>
         <tbody>
             {% for row in data %}
             <tr>
+                <td>
+                    <a  href="/edit/{{row[0]}}" 
+                        class="btn btn-primary" 
+                        data-toggle="tooltip" 
+                        data-placement="left"
+                        title="edit"
+                        data-toggle="modal" data-target="#myModal">
+                        <i class='fas fa-edit' style='font-size:18px'></i>
+                    </a>
+                    <a href="/delete/{{row[0]}}" class="btn btn-danger" data-toggle="tooltip" data-placement="left"
+                        title="delete">
+                        <i class='fas fa-trash-alt' style='font-size:18px'></i>
+                    </a>
+                </td>
                 <td>{{row[0]}}</td>
                 <td>{{row[1]}}</td>
                 <td>{{row[2]}}</td>
-                <td>
-                    <a href="/edit/{{row[0]}}" class="btn btn-secondary">Edit</a>
-                    <a href="/delete/{{row[0]}}" class="btn btn-danger btn-delete">Delete</a>
-                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
 </div>
-
 
 {% endblock %}
