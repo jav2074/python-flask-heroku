@@ -6,11 +6,13 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 import sqlite3
 
 # connection dir property
+import os
+db_dir = os.path.abspath(os.getcwd()) + "/h_database.db"
 db_name = 'h_database.db'             # HEROKU
 
 # Function to Execute Database Querys
 def run_query(query, parameters = ()):
-    with sqlite3.connect(db_name) as conn:
+    with sqlite3.connect(db_dir) as conn:
         cursor = conn.cursor()
         result = cursor.execute(query, parameters) 
         conn.commit()
@@ -52,7 +54,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'    # para flash
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', db_dir=db_dir)
 
 @app.route("/get_my_ip", methods=["GET"])
 def get_my_ip():

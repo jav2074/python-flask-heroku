@@ -46,6 +46,8 @@ pip install virtualenv
 python -m venv venv
 <!-- Ejecucion -->
 cd venv/Scripts
+activate.bat
+deactivate.bat
 python --version
 pip --version
 <!-- Instalacion de FLASK en mi Entorno Virtual -->
