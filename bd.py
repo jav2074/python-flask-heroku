@@ -2,15 +2,18 @@
 # DB
 # -------------------------------------------------------------------------------
 import sqlite3
-from config import config
-from index import app
 
-db_dir = app.config['DB_DIR']
+db_dir = [None]
+
+def db_init(current_config):
+    # print(current_config.DB_DIR)
+    db_dir[0] = current_config.DB_DIR
+
 
 # -------------------------------------------------------------------------------
 # Function to Execute Database Querys
 def run_query(query, parameters = ()):
-    with sqlite3.connect(db_dir) as conn:
+    with sqlite3.connect(db_dir[0]) as conn:
         cursor = conn.cursor()
         result = cursor.execute(query, parameters) 
         conn.commit()
