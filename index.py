@@ -25,6 +25,14 @@ def api_get_product(id):
     cursor = get_product(id)
     result = bd_result_to_json(cursor)
     return jsonify({'product': result}), 200
+
+@app.route('/api/post_product', methods = ['POST'])
+def api_post_product():
+    if(request.method == 'POST'):
+        id = request.form['id']
+        cursor = get_product(id)
+        result = bd_result_to_json(cursor)
+    return jsonify({'product': result}), 200
 # -------------------------------------------------------------------------------
 
 
