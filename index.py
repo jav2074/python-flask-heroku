@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+import json 
 
 # -------------------------------------------------------------------------------
 # DB
@@ -17,7 +18,11 @@ def run_query(query, parameters = ()):
         result = cursor.execute(query, parameters) 
         conn.commit()
     return result
+# -------------------------------------------------------------------------------
 
+
+# -------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 # Get Products from Database
 def get_products():
     # getting data
@@ -49,6 +54,8 @@ def delete_product(id):
 # -------------------------------------------------------------------------------
 
 
+# -------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'    # para flash
 
@@ -56,9 +63,32 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'    # para flash
 def home():
     return render_template('home.html', db_dir=db_dir)
 
-@app.route("/get_my_ip", methods=["GET"])
-def get_my_ip():
+# -------------------------------------------------------------------------------
+# API
+# -------------------------------------------------------------------------------
+def bd_result_to_json(cursor):
+    columns = cursor.description
+    result = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()] 
+    if (len(result) == 1): result = result[0]
+    return result
+# -------------------------------------------
+
+@app.route("/api/get_my_ip", methods=["GET"])
+def api_get_my_ip():
     return jsonify({'ip': request.remote_addr}), 200
+
+@app.route("/api/get_products", methods=["GET"])
+def api_get_products():
+    cursor = get_products()
+    result = bd_result_to_json(cursor)
+    return jsonify({'products': result}), 200
+
+@app.route('/api/get_product/<string:id>', methods=["GET"])
+def api_get_product(id):
+    cursor = get_product(id)
+    result = bd_result_to_json(cursor)
+    return jsonify({'product': result}), 200
+# -------------------------------------------------------------------------------
 
 @app.route('/about')
 def about():
