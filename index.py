@@ -40,7 +40,9 @@ def api_post_product():
         # posted_data = request.get_json()
         # print(posted_data)
         # id = posted_data['id']
-        # id = request.json['id'] #request.form['id']
+        id = request.json['id']
+        print(id)
+        # id = request.form['id']
         # id = request.args.get('id', '')
         cursor = get_product(id)
         result = bd_result_to_json(cursor)
