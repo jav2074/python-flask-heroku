@@ -1,5 +1,5 @@
-from __init__ import create_app
 from flask import render_template, request, redirect, url_for, flash, jsonify
+from __init__ import create_app
 from bd import *
 
 # -------------------------------------------------------------------------------
